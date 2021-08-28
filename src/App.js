@@ -1,5 +1,5 @@
-import React, { PureComponent } from 'react';
-import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import React from 'react';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -9,7 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { Container } from '@material-ui/core';
-import axios from 'axios';
+import axios from "axios";
 
 
 const styles = theme =>({
@@ -70,20 +70,40 @@ const data = [
 class App extends React.Component {
   constructor(prop) {
     super(prop);
+    this.state = {
+      data_test:{
+        confirmed: '',
+        hospitalized: '',
+        deaths: '',
+        recovered: ''
+      }
+    }
   }
   componentDidMount(){
     this.callAPI();
   }
 
   callAPI(){
-    axios.get('http://covid19.th-stat.com/json/covid19v2/getTimeline.json')
+    axios.get('https://covid19.th-stat.com/json/covid19v2/getTimeline.json')
     .then(response => {
       console.log(response.data);
+      const data = response.data['Thailand'];
+      const lastdata = data.slice(-1)[0];
+
+      this.setState({
+        data_text: {
+          confirmed: lastdata['confirmed'],
+          hospitalized: lastdata[''],
+          deaths: lastdata['deaths'],
+          recovered: lastdata['recovered']
+        }
+      })
     })
   }
 
   render() {
     const { classes } = this.props;
+    const { data_text } = this.state;
     return ( 
       <div className={classes.root}>
       <AppBar position="static">
@@ -100,7 +120,7 @@ class App extends React.Component {
         <Grid item xs={6} sm={3}>
           <Paper className={classes.paper}>
             <Typography>Confirmed</Typography>
-            <Typography variant="h3">1000</Typography>
+            <Typography variant="h3">{data_text.confirmed}</Typography>
             <Typography variant="h5">1000</Typography>
           </Paper>
         </Grid>
