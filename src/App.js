@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+//import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -76,9 +76,9 @@ class App extends React.Component {
   }
 
   callAPI(){
-    axios.get('https://covid19.th-stat.com/json/covid19v2/getTimeline.json')
-    .then(Response => {
-      console.log(response.data)
+    axios.get('http://covid19.th-stat.com/json/covid19v2/getTimeline.json')
+    .then(response => {
+      console.log(response.data);
     })
   }
 
